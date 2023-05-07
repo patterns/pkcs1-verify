@@ -26,6 +26,8 @@ pub fn build(b: *std.Build) void {
 
     const libroot = "./mbedtls/library/";
     const cflags = [_][]const u8{
+        "-Iconfig",
+        "-DMBEDTLS_CONFIG_FILE=\"pkcs1verify_config.h\"",
         "-std=c99",
         "-Wall",
         "-Wextra",
@@ -96,9 +98,12 @@ pub fn build(b: *std.Build) void {
         .target = target,
         .optimize = optimize,
     });
+    main_tests.addIncludePath("config");
+    main_tests.defineCMacro("MBEDTLS_CONFIG_FILE", "\"pkcs1verify_config.h\"");
     main_tests.linkLibC();
     main_tests.linkLibrary(lib);
     main_tests.addIncludePath("mbedtls/include");
+
 
     const run_main_tests = b.addRunArtifact(main_tests);
 

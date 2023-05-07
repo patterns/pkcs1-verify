@@ -18,7 +18,7 @@ The #defines for `mbedtls_config.h` required:
 ```
 
 ## Quickstart
-Run verify on the hard-coded test signature (bottom of `src/mbedcrypto.zig`):
+Run verify on the test signature (bottom of `src/mbedcrypto.zig`):
 ```sh
 git clone --recurse-submodules https://github.com/patterns/pkcs1-verify
 cd pkcs1-verify
