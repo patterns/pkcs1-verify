@@ -17,6 +17,14 @@ The #defines for `mbedtls_config.h` required:
     MBEDTLS_PLATFORM_C
 ```
 
+## Quickstart
+Run verify on the hard-coded test signature (bottom of `src/mbedcrypto.zig`):
+```sh
+git clone --recurse-submodules https://github.com/patterns/pkcs1-verify
+cd pkcs1-verify
+zig build test
+```
+
 
 ## Credits
 
