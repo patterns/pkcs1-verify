@@ -1,0 +1,4 @@
+.{
+    .name = "pkcs1verify",
+    .version = "0.0.1",
+}

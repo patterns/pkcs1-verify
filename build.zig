@@ -15,11 +15,9 @@ pub fn build(b: *std.Build) void {
     // set a preferred release mode, allowing the user to decide how to optimize.
     const optimize = b.standardOptimizeOption(.{});
 
+    // build (C) lib without cmake
     const lib = b.addStaticLibrary(.{
-        .name = "mbedcrypto",
-        // In this case the main source file is merely a path, however, in more
-        // complicated build scripts, this could be a generated file.
-        .root_source_file = .{ .path = "src/mbedcrypto.zig" },
+        .name = "pkcs1verify",
         .target = target,
         .optimize = optimize,
     });
@@ -91,15 +89,22 @@ pub fn build(b: *std.Build) void {
     // running `zig build`).
     b.installArtifact(lib);
 
+    // provide linkable for zig code to consume
+    _ = b.addModule("pkcs1verify",
+        .{ .source_file = .{ .path = "src/pkcs1verify.zig" }},
+    );
+
     // Creates a step for unit testing. This only builds the test executable
     // but does not run it.
     const main_tests = b.addTest(.{
-        .root_source_file = .{ .path = "src/mbedcrypto.zig" },
+        .root_source_file = .{ .path = "src/pkcs1verify.zig" },
         .target = target,
         .optimize = optimize,
     });
+    // override the defaults in mbedtls_config.h
     main_tests.addIncludePath("config");
     main_tests.defineCMacro("MBEDTLS_CONFIG_FILE", "\"pkcs1verify_config.h\"");
+
     main_tests.linkLibC();
     main_tests.linkLibrary(lib);
     main_tests.addIncludePath("mbedtls/include");
