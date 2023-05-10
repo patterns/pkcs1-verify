@@ -1,0 +1,39 @@
+name: tags-test
+
+env:
+  LIB_VERSION: https://github.com/Mbed-TLS/mbedtls/archive/refs/tags/v3.4.0.tar.gz
+
+on:
+  push:
+    tags:
+      - 'v*'
+permissions:
+  contents: write
+
+jobs:
+  tags-test:
+    name: tags test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+
+      - name: Fetch MbedTLS v3.4.0
+        run: |
+          curl ${{ env.LIB_VERSION }} -L -o lib.tgz
+          echo "1b899f355022e8d02c4d313196a0a16af86c5a692456fa99d302915b8cf0320a  lib.tgz" | sha256sum --check
+          mkdir dist
+          tar -xzf lib.tgz
+          mv mbedtls-3.4.0 ./dist/mbedtls
+          cp build.zig ./dist/build.zig
+          cp -R src ./dist/
+          rm lib.tgz
+      - name: Bundle tarball for consumers
+        run: |
+          gh release create ${{github.event.release.tag_name}} ./dist/*
+        env:
+          GITHUB_TOKEN: ${{ github.TOKEN }}
+        shell: bash
+
+
