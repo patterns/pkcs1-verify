@@ -29,9 +29,10 @@ jobs:
           cp build.zig ./dist/build.zig
           cp -R src ./dist/
           rm lib.tgz
+          tar -czf ${{github.event.release.tag_name}}.tar.gz ./dist/*
       - name: Bundle tarball for consumers
         run: |
-          gh release create ${{github.event.release.tag_name}} ./dist/*
+          gh release create ${{github.event.release.tag_name}} ${{github.event.release.tag_name}}.tar.gz
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
         shell: bash
