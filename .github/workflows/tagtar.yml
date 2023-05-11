@@ -1,4 +1,4 @@
-name: tags-test
+name: tagtar
 
 env:
   LIB_VERSION: https://github.com/Mbed-TLS/mbedtls/archive/refs/tags/v3.4.0.tar.gz
@@ -11,8 +11,8 @@ permissions:
   contents: write
 
 jobs:
-  tags-test:
-    name: tags test
+  tag-tar:
+    name: tag archives fileset for linkable
     runs-on: ubuntu-latest
 
     steps:
@@ -51,11 +51,24 @@ jobs:
           cp -R config ./dist/
           rm lib.tgz
           tar -czf ${{github.sha}}.tar.gz ./dist/*
-      - name: Bundle tarball for consumers
+      - name: Bundle fileset into tar archive
         run: |
           gh release create ${{github.ref_name}} ${{github.sha}}.tar.gz
         env:
           GITHUB_TOKEN: ${{ github.TOKEN }}
         shell: bash
 
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pymultihash
+      - name: Print archive digest
+        run: |
+          python digest.py
+        with:
+          INPUT-PATH: "${{github.sha}}.tar.gz"
 

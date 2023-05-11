@@ -18,7 +18,7 @@ The #defines for `mbedtls_config.h` required:
 ```
 
 ## Quickstart
-Run verify on the test signature (bottom of `src/mbedcrypto.zig`):
+Run verify on the test signature (bottom of `src/pkcs1verify.zig`):
 ```sh
 git clone --recurse-submodules https://github.com/patterns/pkcs1-verify
 cd pkcs1-verify
@@ -37,4 +37,6 @@ Minimal configuration
 Example verify
  by [MbedTLS](https://github.com/Mbed-TLS/mbedtls/blob/development/programs/pkey/rsa_verify.c) ([LICENSE](https://github.com/Mbed-TLS/mbedtls/blob/development/LICENSE))
 
+Python workflow
+ by [Jacob Tomlinson](https://jacobtomlinson.dev/posts/2019/creating-github-actions-in-python/)
 
