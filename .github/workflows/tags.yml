@@ -23,11 +23,32 @@ jobs:
         run: |
           curl ${{ env.LIB_VERSION }} -L -o lib.tgz
           echo "1b899f355022e8d02c4d313196a0a16af86c5a692456fa99d302915b8cf0320a  lib.tgz" | sha256sum --check
-          mkdir dist
+          mkdir -p dist/mbedtls/library
           tar -xzf lib.tgz
-          mv mbedtls-3.4.0 ./dist/mbedtls
-          cp build.zig ./dist/build.zig
+          mv mbedtls-3.4.0/*.md ./dist/mbedtls/
+          mv mbedtls-3.4.0/LICENSE ./dist/mbedtls/
+          mv mbedtls-3.4.0/include ./dist/mbedtls/
+          mv mbedtls-3.4.0/library/entropy.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/hmac_drbg.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/md.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/sha512.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/sha256.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/rsa.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/rsa_alt_helpers.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/bignum.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/bignum_core.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/bignum_mod.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/bignum_mod_raw.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/oid.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/constant_time.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/platform_util.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/error.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/hash_info.c ./dist/mbedtls/library/
+          mv mbedtls-3.4.0/library/platform.c ./dist/mbedtls/library/
+
+          cp build.* ./dist/
           cp -R src ./dist/
+          cp -R config ./dist/
           rm lib.tgz
           tar -czf ${{github.sha}}.tar.gz ./dist/*
       - name: Bundle tarball for consumers
