@@ -8,7 +8,7 @@ import multihash.multihash
 from multihash import Multihash
 
 def main():
-    tarball = os.environ["INPUT_PATH"]
+    tarball = os.environ["ARCHIVE_PATH"]
     sha2 = hashlib.sha256()
     with open(tarball, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
