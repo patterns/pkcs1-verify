@@ -40,3 +40,5 @@ Example verify
 Python workflow
  by [Jacob Tomlinson](https://jacobtomlinson.dev/posts/2019/creating-github-actions-in-python/)
 
+MD5 in [Python](https://stackoverflow.com/a/3431838)
+
