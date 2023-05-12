@@ -45,18 +45,12 @@ jobs:
           mv mbedtls-3.4.0/library/error.c ./dist/mbedtls/library/
           mv mbedtls-3.4.0/library/hash_info.c ./dist/mbedtls/library/
           mv mbedtls-3.4.0/library/platform.c ./dist/mbedtls/library/
-
+          # Bundle fileset into archive
           cp build.* ./dist/
           cp -R src ./dist/
           cp -R config ./dist/
           rm lib.tgz
           tar -czf ${{github.sha}}.tar.gz ./dist/*
-      - name: Bundle fileset into tar archive
-        run: |
-          gh release create ${{github.ref_name}} ${{github.sha}}.tar.gz
-        env:
-          GITHUB_TOKEN: ${{ github.TOKEN }}
-        shell: bash
 
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -76,4 +70,11 @@ jobs:
       - name: Summarize archive digest
         run: |
           echo ":paperclip: **sha2-256** ``${{ steps.archive-digest.outputs.SHA256_DIGEST }}``" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Make tag into release
+        run: |
+          gh release create ${{github.ref_name}} ${{github.sha}}.tar.gz --notes "SHA256 ${{steps.archive-digest.outputs.SHA256_DIGEST}}"
+        env:
+          GITHUB_TOKEN: ${{ github.TOKEN }}
+        shell: bash
 
