@@ -67,8 +67,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install pymultihash
       - name: Print archive digest
+        id: archive-digest
         run: |
           python digest.py
         env:
           ARCHIVE_PATH: "${{github.sha}}.tar.gz"
+      - name: Summarize archive digest
+        run: |
+          echo "Digest sha2-256: ${{ steps.archive-digest.outputs.SHA256 }}" >> "$GITHUB_STEP_SUMMARY"
 
