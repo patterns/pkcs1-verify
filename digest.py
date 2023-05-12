@@ -16,7 +16,7 @@ def main():
 
     mh = Multihash.from_hash(sha2)
     hex_encoded = mh.encode('hex')
-    print(f'echo "SHA256={hex_encoded}" >> "$GITHUB_OUTPUT"')
+    print(f"{hex_encoded}")
     sys.exit(0)
 
 

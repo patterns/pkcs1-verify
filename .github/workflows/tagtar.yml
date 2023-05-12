@@ -69,10 +69,11 @@ jobs:
       - name: Print archive digest
         id: archive-digest
         run: |
-          python digest.py
+          output=$(python digest.py)
+          echo "SHA256_DIGEST=${output}" >> "$GITHUB_OUTPUT"
         env:
           ARCHIVE_PATH: "${{github.sha}}.tar.gz"
       - name: Summarize archive digest
         run: |
-          echo "Digest sha2-256: ${{ steps.archive-digest.outputs.SHA256 }}" >> "$GITHUB_STEP_SUMMARY"
+          echo ":paperclip: **sha2-256** ``${{ steps.archive-digest.outputs.SHA256_DIGEST }}``" >> "$GITHUB_STEP_SUMMARY"
 
