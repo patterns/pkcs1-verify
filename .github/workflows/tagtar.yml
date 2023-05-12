@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   tag-tar:
-    name: tag archives fileset for linkable
+    name: Tag archives fileset for linkable
     runs-on: ubuntu-latest
 
     steps:
@@ -69,6 +69,6 @@ jobs:
       - name: Print archive digest
         run: |
           python digest.py
-        with:
-          INPUT-PATH: "${{github.sha}}.tar.gz"
+        env:
+          ARCHIVE_PATH: "${{github.sha}}.tar.gz"
 
