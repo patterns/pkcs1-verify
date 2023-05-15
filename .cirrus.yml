@@ -1,12 +1,12 @@
 freebsd_instance:
   image_family: freebsd-14-0-snap
 
-night_task:
+setup_task:
   name: Setup zig-nightly on FreeBSD 14 
   only_if: $CIRRUS_BRANCH == "main"
 
   install_script: pkg install -y llvm16 cmake
-  night_script:
+  setup_script:
     - curl -L -o zig-011.txz https://ziglang.org/builds/zig-0.11.0-dev.3132+465272921.tar.xz
     - tar xzf zig-011.txz
     - cd "zig-0.11.0-dev.3132+465272921"
@@ -14,12 +14,13 @@ night_task:
     - tar xzf zig-011.txz
     - mv "zig-0.11.0-dev.3132+465272921/build/stage3/lib/zig" /usr/local/lib/
     - mv "zig-0.11.0-dev.3132+465272921/build/stage3/bin/zig" /usr/local/bin/
-  night_artifacts:
+  setup_artifacts:
     path: "zig-0.11.0-dev.3132+465272921/build/stage3/*"
+
 library_task:
   name: Config MbedTLS by zig-nightly
   depends_on:
-    - night
+    - setup
   submodules_script:
     - git submodules init
     - git submodules update
