@@ -18,10 +18,12 @@ nightly_task:
   nightly_artifacts:
     path: "zig-0.11.0-dev.3132+465272921/build/stage3/*"
 
-##library_task:
-##  name: Config MbedTLS by zig-nightly
-##  depends_on:
-##    - setup
+library_task:
+  name: Config MbedTLS by zig-nightly
+  only_if: $CIRRUS_BRANCH == "main"
+  depends_on:
+    - nightly
+
   submodules_script:
     - git submodules init
     - git submodules update
