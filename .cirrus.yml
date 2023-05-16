@@ -3,8 +3,6 @@ freebsd_instance:
 
 prereq_task:
   name: Setup zig-nightly on FreeBSD 14 
-  # restricting to main makes it difficult to view status pages
-  ####only_if: $CIRRUS_BRANCH == "main"
   install_script: pkg install -y llvm16 cmake
   setup_script:
     - curl -L -o zig-011.txz https://ziglang.org/builds/zig-0.11.0-dev.3132+465272921.tar.xz
@@ -19,8 +17,6 @@ prereq_task:
 
 library_task:
   name: Config MbedTLS by zig-nightly
-  # restricting to main makes it difficult to view status pages
-  ####only_if: $CIRRUS_BRANCH == "main"
   depends_on:
     - prereq
   submodules_script:
