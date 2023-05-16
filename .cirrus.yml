@@ -1,37 +1,31 @@
 freebsd_instance:
   image_family: freebsd-14-0-snap
 
-nightly_task:
+prereq_task:
   name: Setup zig-nightly on FreeBSD 14 
-  only_if: $CIRRUS_BRANCH == "main"
-
-  install_script: pkg install -y llvm16 cmake
-  nightly_script:
+  install_deps_script: pkg install -y llvm16 cmake git
+  setup_zig_script:
     - curl -L -o zig-011.txz https://ziglang.org/builds/zig-0.11.0-dev.3132+465272921.tar.xz
     - tar xzf zig-011.txz
     - cd "zig-0.11.0-dev.3132+465272921"
     - mkdir build && cd build && cmake -DCMAKE_PREFIX_PATH=/usr/local .. && make install
-    - tar xzf zig-011.txz
-    - mv "zig-0.11.0-dev.3132+465272921/build/stage3/lib/zig" /usr/local/lib/
-    - mv "zig-0.11.0-dev.3132+465272921/build/stage3/bin/zig" /usr/local/bin/
+    - cp -R stage3/lib/zig /usr/local/lib/
+    - cp -R stage3/bin/zig /usr/local/bin/
 
-  nightly_artifacts:
+  stage3_compiler_artifacts:
     path: "zig-0.11.0-dev.3132+465272921/build/stage3/*"
 
-library_task:
-  name: Config MbedTLS by zig-nightly
-  only_if: $CIRRUS_BRANCH == "main"
-  depends_on:
-    - nightly
-
-  submodules_script:
-    - git submodules init
-    - git submodules update
-  build_script:
+##library_task:
+##  name: Config MbedTLS by zig-nightly
+##  depends_on:
+##    - prereq
+  recurse_submodules_script:
+    - git submodule init
+    - git submodule update
+  build_clib_script:
     - zig build
     ##- zig build test
-
-  library_artifacts:
+  config_mbedtls_artifacts:
     path: "zig-out/lib/*"
 
 
