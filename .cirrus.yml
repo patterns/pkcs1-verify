@@ -9,11 +9,12 @@ prereq_task:
     - tar xzf zig-011.txz
     - cd "zig-0.11.0-dev.3132+465272921"
     - mkdir build && cd build && cmake -DCMAKE_PREFIX_PATH=/usr/local .. && make install
-    - cp -R stage3/lib/zig /usr/local/lib/
-    - cp -R stage3/bin/zig /usr/local/bin/
+    - tar -cjf ../../nightly.tar.bz2 stage3/lib stage3/bin
+    - mv stage3/lib/zig /usr/local/lib/
+    - mv stage3/bin/zig /usr/local/bin/
 
-  stage3_compiler_artifacts:
-    path: "zig-0.11.0-dev.3132+465272921/build/stage3/*"
+  stage3_nightly_artifacts:
+    path: nightly.tar.bz2
 
 ##library_task:
 ##  name: Config MbedTLS by zig-nightly
@@ -22,7 +23,7 @@ prereq_task:
   recurse_submodules_script:
     - git submodule init
     - git submodule update
-  build_clib_script:
+  static_clib_script:
     - zig build
     ##- zig build test
   config_mbedtls_artifacts:
