@@ -9,8 +9,9 @@ prereq_task:
     - tar xzf zig-011.txz
     - cd "zig-0.11.0-dev.3132+465272921"
     - mkdir build && cd build && cmake -DCMAKE_PREFIX_PATH=/usr/local .. && make install
-    ##- mv "zig-0.11.0-dev.3132+465272921/build/stage3/*" /usr/local/
-    - mv stage3/* /usr/local/
+    - cp -R stage3/lib/zig /usr/local/lib/
+    - cp -R stage3/bin/zig /usr/local/bin/
+
   stage3_compiler_artifacts:
     path: "zig-0.11.0-dev.3132+465272921/build/stage3/*"
 
