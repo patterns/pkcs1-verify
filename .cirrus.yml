@@ -3,7 +3,7 @@ freebsd_instance:
 
 prereq_task:
   name: Setup zig-nightly on FreeBSD 14 
-  install_deps_script: pkg install -y llvm16 cmake
+  install_deps_script: pkg install -y llvm16 cmake git
   setup_zig_script:
     - curl -L -o zig-011.txz https://ziglang.org/builds/zig-0.11.0-dev.3132+465272921.tar.xz
     - tar xzf zig-011.txz
