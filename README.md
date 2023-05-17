@@ -32,6 +32,7 @@ zig build test
 - Git submodules are not included in the commit-auto tar archives created by GitHub. In order to create a Zig dependency URL, you must generate your own archive file set.
 - Zig dependency rejects `.tar.gz` archive. Compared tarballs released on GitHub and GitLab, both are rejected by zig-build. 
 - Cirrus CI pipeline task names are hidden when the `only_if: $CIRRUS_BRANCH="main"` rule is applied which prevents dependent tasks during pull requests.
+- GitLab CI pipeline uses `$CI_JOB_TOKEN` for the generic package registry; personal access token and project access token are not for the CI x generic package case.
 
 At this time, I think it's necessary to avoid using Git submodules in favor of including the submodule source files directly, and then letting GitHub generate the automatic tar archives. Testing this as next approach for depedency in pink-elephants.
 
