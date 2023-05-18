@@ -5,9 +5,9 @@ prereq_task:
   name: Setup zig-nightly on FreeBSD 14 
   install_deps_script: pkg install -y llvm16 cmake git
   setup_zig_script:
-    - curl -L -o zig-011.txz https://ziglang.org/builds/zig-0.11.0-dev.3132+465272921.tar.xz
+    - curl -L -o zig-011.txz https://ziglang.org/builds/zig-0.11.0-dev.3202+378264d40.tar.xz
     - tar xzf zig-011.txz
-    - cd "zig-0.11.0-dev.3132+465272921"
+    - cd "zig-0.11.0-dev.3202+378264d40"
     - mkdir build && cd build && cmake -DCMAKE_PREFIX_PATH=/usr/local .. && make install
     - tar -cjf ../../nightly.tar.bz2 stage3/lib stage3/bin
     - mv stage3/lib/zig /usr/local/lib/
