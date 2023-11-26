@@ -3,11 +3,11 @@ freebsd_instance:
 
 prereq_task:
   name: Setup zig-nightly on FreeBSD 14 
-  install_deps_script: pkg install -y llvm16 cmake git
+  install_deps_script: pkg install -y llvm17 cmake git
   setup_zig_script:
-    - curl -L -o zig-011.txz https://ziglang.org/builds/zig-0.11.0-dev.3202+378264d40.tar.xz
-    - tar xzf zig-011.txz
-    - cd "zig-0.11.0-dev.3202+378264d40"
+    - curl -L -o zig-012.txz https://ziglang.org/builds/zig-0.12.0-dev.1733+648f592db.tar.xz
+    - tar xzf zig-012.txz
+    - cd "zig-0.12.0-dev.1733+648f592db"
     - mkdir build && cd build && cmake -DCMAKE_PREFIX_PATH=/usr/local .. && make install
     - tar -cjf ../../nightly.tar.bz2 stage3/lib stage3/bin
     - mv stage3/lib/zig /usr/local/lib/
@@ -28,8 +28,5 @@ prereq_task:
     ##- zig build test
   config_mbedtls_artifacts:
     path: "zig-out/lib/*"
-
-
-
 
 
