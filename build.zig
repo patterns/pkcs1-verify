@@ -78,7 +78,7 @@ pub fn build(b: *std.Build) void {
 
     };
 
-    lib.addCSourceFiles(&sources, &cflags);
+    lib.addCSourceFiles(.{.files=&sources, .flags=&cflags});
     lib.linkLibC();
     lib.addIncludePath("mbedtls/include");
     lib.addIncludePath(libroot);
