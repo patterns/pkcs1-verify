@@ -80,8 +80,8 @@ pub fn build(b: *std.Build) void {
 
     lib.addCSourceFiles(.{.files=&sources, .flags=&cflags});
     lib.linkLibC();
-    lib.addIncludePath("mbedtls/include");
-    lib.addIncludePath(libroot);
+    lib.addIncludePath(.{ .path = "./mbedtls/include" });
+    lib.addIncludePath(.{ .path = libroot });
 
 
     // This declares intent for the library to be installed into the standard
