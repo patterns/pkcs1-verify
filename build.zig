@@ -102,12 +102,12 @@ pub fn build(b: *std.Build) void {
         .optimize = optimize,
     });
     // override the defaults in mbedtls_config.h
-    main_tests.addIncludePath("config");
+    main_tests.addIncludePath(.{ .path = "./config" });
     main_tests.defineCMacro("MBEDTLS_CONFIG_FILE", "\"pkcs1verify_config.h\"");
 
     main_tests.linkLibC();
     main_tests.linkLibrary(lib);
-    main_tests.addIncludePath("mbedtls/include");
+    main_tests.addIncludePath(.{ .path = "./mbedtls/include" });
 
 
     const run_main_tests = b.addRunArtifact(main_tests);
