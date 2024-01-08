@@ -91,7 +91,7 @@ pub fn build(b: *std.Build) void {
 
     // provide linkable for zig code to consume
     _ = b.addModule("pkcs1verify",
-        .{ .source_file = .{ .path = "src/pkcs1verify.zig" }},
+        .{ .root_source_file = .{ .path = "src/pkcs1verify.zig" }},
     );
 
     // Creates a step for unit testing. This only builds the test executable
